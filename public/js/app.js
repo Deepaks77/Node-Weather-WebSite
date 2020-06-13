@@ -25,7 +25,6 @@ weatherform.addEventListener("submit",(event)=>{
             weatherimg.style.display="inline"
             weatherimg.src=data.weatherIcon;
             success.innerHTML="<h3> Place Name:"+data.placename + "</h3><br />" + ` ${data.weatherdesc} It is currently ${data.temp} degree out, It feels like ${data.feelslike} degree out`
-            console.log(data.weatherIcon);
         }
             loading.style.display = "none";
         })

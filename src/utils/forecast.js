@@ -11,13 +11,14 @@ const forecast = (address, callback) => {
         else {
             const data = body.current;
             const weatherdesc=data.weather_descriptions[0];
-            const {temperature:temp,feelslike,weather_icons:weatherIcon}=data;
+            const {temperature:temp,feelslike,weather_icons:weatherIcon,humidity}=data;
 
             callback(undefined, {
                 weatherdesc,
                 temp,
                 feelslike,
-                weatherIcon
+                weatherIcon,
+                humidity
             });
         }
     })

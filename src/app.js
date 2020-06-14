@@ -41,13 +41,14 @@ app.get("/weather", (req, res) => {
                 if (error)
                     return res.send({error})
                 else {
-                    const { weatherdesc, temp, feelslike , weatherIcon } = data
+                    const { weatherdesc, temp, feelslike , weatherIcon , humidity} = data
                     return res.send({
                         placename,
                         weatherdesc,
                         temp,
                         feelslike,
-                        weatherIcon                 
+                        weatherIcon,
+                        humidity                 
                     })
                     //console.log(`${weatherdesc} It is currently ${temp} degree out. It feels like ${feelslike} degree out`)
                 }

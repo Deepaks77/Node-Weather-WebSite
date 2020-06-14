@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const geoCode = require("./utils/geoCode");
 const forecast = require("./utils/forecast");
-const port =process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 //Define Paths and Static Config for Express Config.
 app.use(express.static(path.join(__dirname, "../public")));
@@ -25,30 +25,31 @@ app.get("/", (req, res) => {
 app.get("/about", (req, res) => {
     res.render("about", { title: "About Me", name: "Deepak Sindhwani" });
 })
+
 app.get("/weather", (req, res) => {
     if (!req.query.address)
         return res.send({
-            error:"Please Enter Address in URL"
+            error: "Please Enter Address in URL"
         });
 
     geoCode(req.query.address, (error, { latitude, longitude, placename } = {}) => {
         if (error)
-            return res.send({error})
+            return res.send({ error })
         else {
             console.log("Place " + placename)
             let lonlat = latitude + "," + longitude;
             forecast(lonlat, (error, data) => {
                 if (error)
-                    return res.send({error})
+                    return res.send({ error })
                 else {
-                    const { weatherdesc, temp, feelslike , weatherIcon , humidity} = data
+                    const { weatherdesc, temp, feelslike, weatherIcon, humidity } = data
                     return res.send({
                         placename,
                         weatherdesc,
                         temp,
                         feelslike,
                         weatherIcon,
-                        humidity                 
+                        humidity
                     })
                     //console.log(`${weatherdesc} It is currently ${temp} degree out. It feels like ${feelslike} degree out`)
                 }
@@ -57,6 +58,25 @@ app.get("/weather", (req, res) => {
     });
 })
 
+app.get("/weather/Current", (req, res) => {
+    forecast(req.query.address, (error, data) => {
+        if (error)
+            return res.send({ error })
+        else {
+            const { pName, State, country, weatherdesc, temp, feelslike, weatherIcon, humidity } = data
+            return res.send({
+                weatherdesc,
+                temp,
+                feelslike,
+                weatherIcon,
+                humidity,
+                pName,
+                State,
+                country
+            })
+        }
+    })
+})
 
 
 app.get("/help", (req, res) => {
@@ -84,5 +104,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log("Server is Up and Running on Port ",port);
+    console.log("Server is Up and Running on Port ", port);
 })

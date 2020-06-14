@@ -12,8 +12,12 @@ const forecast = (address, callback) => {
             const data = body.current;
             const weatherdesc=data.weather_descriptions[0];
             const {temperature:temp,feelslike,weather_icons:weatherIcon,humidity}=data;
+            const {name:pName,region:State,country}=body.location;
 
             callback(undefined, {
+                pName,
+                State,
+                country,
                 weatherdesc,
                 temp,
                 feelslike,
